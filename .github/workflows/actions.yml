@@ -44,4 +44,4 @@ jobs:
           docker tag champagne_coding:latest $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
           docker push $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
         env:
-          GH_REG: {{ github.repostitory }}
+          GH_REG: ${{ github.repostitory }}
