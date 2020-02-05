@@ -40,9 +40,8 @@ jobs:
           username: $GITHUB_ACTOR
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: build container
-        run: |
-          docker build . --tag champagne_coding:latest
+        run: docker build . --tag champagne_coding:latest
       - name: view contents of container
         run: docker run champagne_coding:latest ls -la
       - name: push container to local registry        
-        run: docker push champagne_coding:latest
+        run: docker push docker.pkg.github.com/${GITHUB_ACTOR}/champagne_coding:latest
