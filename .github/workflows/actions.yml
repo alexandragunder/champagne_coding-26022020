@@ -38,14 +38,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Check out code
-      - uses: azure/docker-login@v1
-        name: Build container
+      - name: Sign in to github container registry
+        uses: azure/docker-login@v1
         with:
           login-server: $GH_REGISTRY
           username: $GITHUB_ACTOR
           password: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+      - name: Pull latest build for priming cache
+        run: docker pull $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
+      - name: Build container
+        run: |          
           docker build . --tag champagne_coding:latest
           docker run champagne_coding:latest ls -la
           docker tag champagne_coding:latest $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
-          docker push $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
+#          docker push $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
