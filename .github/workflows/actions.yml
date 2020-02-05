@@ -33,11 +33,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: login to registry
-        run: docker login docker.pkg.github.com
-#        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin containers.redpill-linpro.com
+      - name: Docker Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: docker.pkg.github.com
+          username: $GITHUB_ACTOR
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: build container
         run: docker build . --tag champagne_coding:latest
       - name: check container
         run: docker run -ti champagne_coding ls -la
-        
+      - name: push container to local registry        
+        run: docker push $GITHUB_REPOSITORY:latest
+
