@@ -50,4 +50,4 @@ jobs:
       - name: push container to local registry        
         run: |
           docker tag champagne_coding:latest $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
-          docker push $GH_CONTAINER_TAG
+          docker push $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
