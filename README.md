@@ -9,3 +9,14 @@ To re-create the environment:
 -- __NOTE:__ if this doesn't work and you're using Windows, you may have to install the Python packages as you go through the code
 - ```conda activate champagne_coding```
 - Start a jupyter notebook (```jupyter notebook```) 
+
+
+
+## Docker
+
+Running the code locally:
+
+```
+docker build . -t champ
+docker run -p 8080:8080 champ
+```
