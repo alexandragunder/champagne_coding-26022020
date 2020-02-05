@@ -3,7 +3,7 @@ name: Test CI
 on: [push]
 
 jobs:
-  test the code:
+  test_the_code:
 
     runs-on: ubuntu-latest
     strategy:
@@ -29,7 +29,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
 
-  build docker:
+  build_docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
