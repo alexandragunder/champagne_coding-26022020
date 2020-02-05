@@ -3,7 +3,7 @@ name: Test CI
 on: [push]
 
 jobs:
-  build:
+  test the code:
 
     runs-on: ubuntu-latest
     strategy:
@@ -27,3 +27,15 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+
+  build docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+#      - name: login to registry
+#        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin containers.redpill-linpro.com
+      - name: build container
+        run: docker build . --tag champagne_coding:latest
+        
+        
