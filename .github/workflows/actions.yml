@@ -45,7 +45,9 @@ jobs:
           username: $GITHUB_ACTOR
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull latest build for priming cache
-        run: docker pull $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
+        run: |
+          docker config inspect
+          docker pull $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
       - name: Build container
         run: |          
           docker build . --tag champagne_coding:latest
