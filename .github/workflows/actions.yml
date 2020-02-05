@@ -44,4 +44,6 @@ jobs:
       - name: view contents of container
         run: docker run champagne_coding:latest ls -la
       - name: push container to local registry        
-        run: docker push docker.pkg.github.com/${GITHUB_ACTOR}/champagne_coding:latest
+        run: |
+          docker tag champagne_coding:latest docker.pkg.github.com/${GITHUB_ACTOR}/champagne_coding:latest
+          docker push docker.pkg.github.com/${GITHUB_ACTOR}/champagne_coding:latest
