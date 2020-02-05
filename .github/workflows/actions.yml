@@ -39,5 +39,5 @@ jobs:
       - name: build container
         run: docker build . --tag champagne_coding:latest
       - name: check container
-        run docker run -ti champagne_coding ls -la
+        run: docker run -ti champagne_coding ls -la
         
