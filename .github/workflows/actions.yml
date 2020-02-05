@@ -40,8 +40,9 @@ jobs:
         run: docker run champagne_coding:latest ls -la
       - name: Push container
         run: |          
-          docker login -u $GH_REG -p ${{ secrets.GITHUB_TOKEN }}
+          echo "$GH_PW" docker login -u $GH_REG --password-stdin
           docker tag champagne_coding:latest $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
           docker push $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
         env:
           GH_REG: ${{ github.repostitory }}
+          GH_PW: ${{ secrets.GITHUB_TOKEN }}
