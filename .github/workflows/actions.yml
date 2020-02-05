@@ -43,7 +43,7 @@ jobs:
 
       - name: Push container
         run: |          
-          echo $GH_PW | docker login -u $GITHUB_ACTOR --password-stdin
+          echo $GH_PW | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin 
           docker tag champagne_coding:latest $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
           docker push $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
         env:
