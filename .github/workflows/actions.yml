@@ -2,6 +2,10 @@ name: Test CI
 
 on: [push]
 
+env:
+  GH_REGISTRY: docker.pkg.github.com  
+  GH_CONTAINER_TAG: ${GH_REGISTRY}/${GITHUB_REPOSITORY}/champagne_coding:latest
+
 jobs:
   # test_the_code:
 
@@ -45,5 +49,5 @@ jobs:
         run: docker run champagne_coding:latest ls -la
       - name: push container to local registry        
         run: |
-          docker tag champagne_coding:latest docker.pkg.github.com/${GITHUB_ACTOR}/champagne_coding:latest
-          docker push docker.pkg.github.com/${GITHUB_ACTOR}/champagne_coding:latest
+          docker tag champagne_coding:latest ${GH_CONTAINER_TAG}
+          docker push ${GH_CONTAINER_TAG}
