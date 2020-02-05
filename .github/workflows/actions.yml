@@ -37,17 +37,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Docker Login
+      - name: Build container
         uses: azure/docker-login@v1
         with:
           login-server: $GH_REGISTRY
           username: $GITHUB_ACTOR
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: build container
-        run: docker build . --tag champagne_coding:latest
-      - name: view contents of container
-        run: docker run champagne_coding:latest ls -la
-      - name: push container to local registry        
-        run: |
+      - run: |
+          docker build . --tag champagne_coding:latest
+          docker run champagne_coding:latest ls -la
           docker tag champagne_coding:latest $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
           docker push $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
