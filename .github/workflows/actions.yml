@@ -2,10 +2,6 @@ name: Test CI
 
 on: [push]
 
-env:
-  GH_REGISTRY: docker.pkg.github.com  
-  GH_CONTAINER_TAG: $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
-
 jobs:
   # test_the_code:
 
@@ -36,21 +32,10 @@ jobs:
   build_docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        name: Check out code
-      - name: Sign in to github container registry
-        uses: azure/docker-login@v1
-        with:
-          login-server: $GH_REGISTRY
-          username: $GITHUB_ACTOR
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Pull latest build for priming cache
-        run: |
-          docker config inspect $DOCKER_CONFIG
-          docker pull $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
+      - name: Check out code
+        uses: actions/checkout@v2
       - name: Build container
-        run: |          
-          docker build . --tag champagne_coding:latest
-          docker run champagne_coding:latest ls -la
-          docker tag champagne_coding:latest $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
-#          docker push $GH_REGISTRY/$GITHUB_REPOSITORY/champagne_coding:latest
+        run: docker build . --tag champagne_coding:latest
+      - name: Check contents of container
+        run: docker run champagne_coding:latest ls -la
+
