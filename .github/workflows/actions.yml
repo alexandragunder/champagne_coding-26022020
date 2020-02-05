@@ -38,4 +38,10 @@ jobs:
         run: docker build . --tag champagne_coding:latest
       - name: Check contents of container
         run: docker run champagne_coding:latest ls -la
-
+      - name: Push container
+        run: |          
+          docker login -u $GH_REG -p ${{ secrets.GITHUB_TOKEN }}
+          docker tag champagne_coding:latest $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
+          docker push $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
+        env:
+          GH_REG: {{ github.repostitory }}
