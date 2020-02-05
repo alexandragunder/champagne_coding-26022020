@@ -36,9 +36,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Login and pull container
-      - run: |
+        run: |
           echo $GH_PW | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin 
           docker pull $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
+        env:
+          GH_REG: docker.pkg.github.com
+          GH_PW: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build container
         run: docker build . --tag champagne_coding:latest
@@ -52,4 +55,3 @@ jobs:
           docker push $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
         env:
           GH_REG: docker.pkg.github.com
-          GH_PW: ${{ secrets.GITHUB_TOKEN }}
