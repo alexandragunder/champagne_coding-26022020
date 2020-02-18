@@ -3,26 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <script defer>
+    <script>
 <!--
 function get_prediction( data ) {
-  console.log( data )
   $.ajax({ url: "/predict",
            type: "POST",
            data: data,
-           success: function( result ) { console.log( result ); update_prediction( result[ 'data' ])},
+           success: function( result ) { console.log( result ); update_prediction( result )},
            error: function( response ) { alert( 'An error occurred' )}
    });
 }
 
 function update_prediction( result ) {
-  console.log( "aaa" )
-  target = document.getElementById( 'result' )
+  document.getElementById( 'result' ).innerText = result.prediction
 }
 
 function subm() {
@@ -45,7 +41,14 @@ function subm() {
     <div class="container">
       <h1>House Price Predictor</h1>
       <hr>
-           
+
+      <div id="result_block">
+        <p>
+          <b>Result:</b>&nbsp;<u><span id="result"></span></u>
+        </p>
+        <hr>
+      </div>
+      
       <form>
         <button type="button" onclick="subm();" class="btn btn-primary btn-sm float-right">Submit</button>
 

@@ -40,8 +40,8 @@ def predict():
     # Return a json structure containing input and resulting prediction
 
     ret = { 'input': data,
-            'prediction': prediction[0] }
-    return jsonify( ret )
+            'prediction': "%.2f" % prediction[0] }
+    return ret
 
 
 def load_model( name ):
@@ -122,7 +122,7 @@ def serve_script():
 
 @app.route( '/predict', methods=[ 'GET', 'POST' ])
 def query_predict():
-    return predict() 
+    return jsonify( predict())
 
 #
 # Launch debug mode if run as script
