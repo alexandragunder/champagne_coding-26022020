@@ -1,10 +1,11 @@
 FROM python:slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY prod/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-COPY ./prod .
-COPY ./models models
+#COPY ./prod .
+#COPY ./models models
+COPY . .
 
-CMD [ "python", "./predict.py" ]
+CMD [ "python", "./prod/predict.py" ]

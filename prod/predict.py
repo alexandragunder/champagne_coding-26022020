@@ -1,5 +1,5 @@
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from voluptuous import Schema, Required, Any, Coerce, Invalid, MultipleInvalid
 from joblib import load
 from pathlib import Path
@@ -7,7 +7,7 @@ import pandas as pd
 import sklearn
 
 
-def predict():    
+def predict():
     """ Main function. Predict house price given a set of input data and a
         stored model. Return a json struct"""
 
@@ -26,12 +26,12 @@ def predict():
     # The model needs the input data in a pandas dataframe. Pass array with headers
     # ensures correct estmiate
 
-    input_data = pd.DataFrame([data])
     headers = [ 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot',
                 'floors', 'waterfront', 'view', 'condition', 'grade',
                 'sqft_above', 'sqft_basement', 'yr_built',
                 'yr_renovated', 'zipcode', 'lat', 'long',
                 'sqft_living15', 'sqft_lot15', 'year']
+    input_data = pd.DataFrame([data])
 
     # Now run a prediction given the model and input_data
 
@@ -85,18 +85,39 @@ def fetch_input():
 #
 # Flask framework below
 #
-app = Flask( __name__, static_url_path='' )
+app = Flask( __name__ )
 
 @app.route( '/liveness' )
 def liveness():
     return 'Hello there!'
 
-@app.route( '/', methods=[ 'GET' ])
-def root():
-    return app.send_static_file( 'index.html' )
+@app.route( '/' )
+def serve_html():
+
+    description = { 'bedrooms': [  'Number of bedrooms', 2 ],
+                    'bathrooms': [ 'Number of bathrooms (where .5 accounts for a room with a toilet but no shower)', 2 ],
+                    'sqft_living': [ 'Square footage of the apartments interior living space', 2000 ],
+                    'sqft_lot': [ 'Square footage of the land space', 20000 ],
+                    'floors': [ 'Number of floors (float or int)', 2 ],
+                    'waterfront': [ 'Waterfront (0=no, 1=yes)', 0 ],
+                    'view': [ 'An index from 0 to 4 of how good the view of the property was', 2 ],
+                    'condition': [ 'An index from 1 to 5 on the condition of the apartment', 2 ],
+                    'grade': [ 'An index from 1 to 13, where 1-3 falls short of building construction and design, 7 has an average level of construction and design, and 11-13 have a high quality level of construction and design', 8 ],
+                    'sqft_above': [ 'The square footage of the interior housing space that is above ground level', 2000 ],
+                    'sqft_basement': [ 'The square footage of the interior housing space that is below ground level', 0 ],
+                    'yr_built': [ 'The year the house was initially built', 1990 ],
+                    'yr_renovated': [ 'The year of the house’s last renovation', 0 ],
+                    'zipcode': [ 'What zipcode area the house is in', 98006 ],
+                    'lat': [ 'Lattitude', 47.5 ],
+                    'long': [ 'Longitude', -122.1 ],
+                    'sqft_living15': [ 'The square footage of interior housing living space for the nearest 15 neighbors', 2000 ],
+                    'sqft_lot15': [ 'The square footage of the land lots of the nearest 15 neighbors', 20000 ],
+                    'year': [ 'Year', 2015 ]}
+
+    return render_template( 'predict.html', options = description )
 
 @app.route( '/script.js', methods=[ 'GET' ])
-def script():
+def serve_script():
     return app.send_static_file( 'script.js' )
 
 @app.route( '/predict', methods=[ 'GET', 'POST' ])
