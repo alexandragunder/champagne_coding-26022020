@@ -3,24 +3,41 @@ from flask import Flask, request, jsonify
 from voluptuous import Schema, Required, Any, Coerce, Invalid, MultipleInvalid
 from joblib import load
 from pathlib import Path
-
 import pandas as pd
 import sklearn
+
 
 def predict():    
     """ Main function. Predict house price given a set of input data and a
         stored model. Return a json struct"""
-    
+
+    # Get input parameters
+
     input_ok, data = fetch_input()
     if not input_ok:
         return 'Error: %s' % data
+
+    # Import the trained model
 
     model = load_model( 'grad_boosting_regressor' )
     if not model:
         return 'Error: Could not load model'
 
+    # The model needs the input data in a pandas dataframe. Pass array with headers
+    # ensures correct estmiate
+
     input_data = pd.DataFrame([data])
-    prediction = model.predict( input_data )
+    headers = [ 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot',
+                'floors', 'waterfront', 'view', 'condition', 'grade',
+                'sqft_above', 'sqft_basement', 'yr_built',
+                'yr_renovated', 'zipcode', 'lat', 'long',
+                'sqft_living15', 'sqft_lot15', 'year']
+
+    # Now run a prediction given the model and input_data
+
+    prediction = model.predict( input_data[headers] )
+
+    # Return a json structure containing input and resulting prediction
 
     ret = { 'input': data,
             'prediction': prediction[0] }
@@ -28,12 +45,16 @@ def predict():
 
 
 def load_model( name ):
+    """ Load the datamodel that we trained and saved in the Jupyter notebook """
     return load( Path( 'models', '{}.joblib'.format( name )))
 
+
 def fetch_input():
-    """ Handle input through request.values and validation through the voluptuous
-        library. Set default values if input variables are not given. Returns a dict """
-    
+    """ Handle input through Flask request.values, then validate the input
+        using the voluptuous library. Set default values if input
+        variables are not given. Returns a dict containg input or
+        default values for all parameters """
+
     s = Schema({
         Required( 'bedrooms', default=2 ): Coerce( int ),
         Required( 'bathrooms', default=2 ): Any( Coerce( float ), Coerce( int )),
