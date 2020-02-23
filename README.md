@@ -19,4 +19,6 @@ Running the code locally:
 ```
 docker build . -t champ
 docker run -p 8080:8080 champ
+docker tag champ docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
+docker login -u default -p $(oc whoami -t) docker-registry-default.apps.redpill-linpro.com
 ```
