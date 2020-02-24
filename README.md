@@ -18,7 +18,25 @@ Running the code locally:
 
 ```
 docker build . -t champ
-docker run -p 8080:8080 champ
+docker run -p 8080:8080  --volume="$PWD:/app" champ
 docker tag champ docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
 docker login -u default -p $(oc whoami -t) docker-registry-default.apps.redpill-linpro.com
 ```
+
+
+triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - gitlab-runner
+        from:
+          kind: ImageStreamTag
+          name: 'gitlab-runner:alpine'
+          namespace: gitlab
+        lastTriggeredImage: >-
+          docker.io/gitlab/gitlab-runner@sha256:9b96b923979e3060604b0ff97ab1a70a22769208a168ff50b0f77c7275969f54
+      type: ImageChange
+
+
+oc tag docker.io/gitlab/gitlab-runner:alpine gitlab-runner:alpine --scheduled
