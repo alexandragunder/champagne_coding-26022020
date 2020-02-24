@@ -44,9 +44,14 @@ def predict():
     return ret
 
 
+def get_models():
+    """ Return list of model names """
+    return glob.glob( 'models' )
+
+
 def load_model( name ):
     """ Load the datamodel that we trained and saved in the Jupyter notebook """
-    return load( Path( 'models', '{}.joblib'.format( name )))
+    return [ Path(i).stem for i in glob.glob( 'models/*.joblib' )]
 
 
 def fetch_input():
@@ -114,7 +119,7 @@ def serve_html():
                     'sqft_lot15': [ 'The square footage of the land lots of the nearest 15 neighbors', 20000 ],
                     'year': [ 'Year', 2015 ]}
 
-    return render_template( 'predict.html', options = description )
+    return render_template( 'predict.html', options = description, models = models )
 
 @app.route( '/script.js', methods=[ 'GET' ])
 def serve_script():
