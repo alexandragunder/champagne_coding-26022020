@@ -7,5 +7,5 @@ COPY ./prod .
 COPY ./models models
 #COPY . .
 
-PORT 8080
+EXPOSE 8080
 CMD [ "python", "./prod/predict.py" ]
