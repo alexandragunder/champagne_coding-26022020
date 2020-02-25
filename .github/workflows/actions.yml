@@ -46,6 +46,10 @@ jobs:
           echo $GH_PW | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin 
           docker tag champagne_coding:latest $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
           docker push $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
+          echo $RL_USER
+          echo $RL_PW
         env:
           GH_REG: docker.pkg.github.com
           GH_PW: ${{ secrets.GITHUB_TOKEN }}
+          RL_USER: ${{ secrets.EMAIL }}
+          RL_PW: ${{ secrets.PASSWORD }}
