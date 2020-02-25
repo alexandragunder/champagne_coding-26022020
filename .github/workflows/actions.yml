@@ -9,11 +9,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Build container
-        run: docker build . --tag champagne_coding:latest
+#      - name: Build container
+#        run: docker build . --tag champagne_coding:latest
 
-      - name: Check contents of container
-        run: docker run champagne_coding:latest ls -la
+#      - name: Check contents of container
+#        run: docker run champagne_coding:latest ls -la
 
 #      - name: Push container
 #        run: |
@@ -32,8 +32,13 @@ jobs:
           parameters: '{ "username": "${{ secrets.EMAIL }}", "password": "${{ secrets.PASSWORD }}"}'
           cmd: |
             oc whoami -t
-            TAG=`oc whoami -t`
-          run: |            
-            docker tag champagne_coding:latest docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
-            docker login -u default -p $(oc whoami -t) docker-registry-default.apps.redpill-linpro.com
-            docker push docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
+      - name: Test
+        run: |
+          wget "https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz"
+          tar -xzvf openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
+          mv openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit oc
+          chmod a+rx oc
+          ./oc login paas.redpill-linpro.com -u "${{ secrets.EMAIL }}" -p "${{ secrets.PASSWORD }}"
+          docker tag champagne_coding:latest docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
+          docker login -u default -p $(./oc whoami -t) docker-registry-default.apps.redpill-linpro.com
+          docker push docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
