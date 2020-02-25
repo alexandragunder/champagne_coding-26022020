@@ -9,11 +9,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-#      - name: Build container
-#        run: docker build . --tag champagne_coding:latest
+      - name: Build container
+        run: docker build . --tag champagne_coding:latest
 
-#      - name: Check contents of container
-#        run: docker run champagne_coding:latest ls -la
+      - name: Check contents of container
+        run: docker run champagne_coding:latest ls -la
 
 #      - name: Push container
 #        run: |
@@ -29,7 +29,6 @@ jobs:
           ./helpers/oc login paas.redpill-linpro.com -u "${{ secrets.EMAIL }}" -p "${{ secrets.PASSWORD }}"
           ./helpers/oc project champagne-coding
           TARGET_NAME=`echo "champagne-coding-${{ secrets.EMAIL }}" | sed -e 's/@example.com//'`
-          echo $TARGET_NAME | cat
           docker tag champagne_coding:latest docker-registry-default.apps.redpill-linpro.com/champagne-coding/$TARGET_NAME
           docker login -u default -p $(./helpers/oc whoami -t) docker-registry-default.apps.redpill-linpro.com
           docker push docker-registry-default.apps.redpill-linpro.com/champagne-coding/$TARGET_NAME
