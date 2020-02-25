@@ -15,7 +15,7 @@ jobs:
       - name: Check contents of container
         run: docker run champagne_coding:latest ls -la
 
-#      - name: Push container
+#      - name: Push image to GitHub project specific repository
 #        run: |
 #          echo $GH_PW | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin 
 #          docker tag champagne_coding:latest $GH_REG/$GITHUB_REPOSITORY/champagne_coding:latest
