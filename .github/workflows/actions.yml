@@ -56,6 +56,6 @@ jobs:
           version: 'latest'
           openshift_server_url: paas.redpill-linpro.com
           parameters: { 'username': "${{ secrets.EMAIL }}", 'password': "${{ secrets.PASSWORD }}"}
-        cmd: |
-          oc whoami -t
+          cmd: |
+            oc whoami -t
           
