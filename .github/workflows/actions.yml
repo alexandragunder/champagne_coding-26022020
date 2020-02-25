@@ -30,6 +30,9 @@ jobs:
           version: 'latest'
           openshift_server_url: paas.redpill-linpro.com
           parameters: '{ "username": "${{ secrets.EMAIL }}", "password": "${{ secrets.PASSWORD }}"}'
+          cmd: |
+            oc whoami -t
+            TAG=`oc whoami -t`
           run: |            
             docker tag champagne_coding:latest docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
             docker login -u default -p $(oc whoami -t) docker-registry-default.apps.redpill-linpro.com
