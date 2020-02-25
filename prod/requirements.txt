@@ -1,0 +1,6 @@
+Flask
+voluptuous
+joblib
+scikit-learn==0.22.1
+sklearn
+pandas==1.0.0

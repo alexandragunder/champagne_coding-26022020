@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <script>
+<!--
+function get_prediction( data ) {
+  chosen_model = document.getElementById( 'model' ).value,
+  $.ajax({ url: "/predict/" + chosen_model,
+           type: "POST",
+           data: data,
+           success: function( result ) { console.log( result ); update_prediction( result )},
+           error: function( response ) { alert( 'An error occurred' )}
+   });
+}
+
+function update_prediction( result ) {
+  document.getElementById( 'result' ).innerText = result.prediction
+}
+
+function subm() {
+  inputs = [ '{{ options|join("', '")|safe }}' ]
+  args = {}
+  for (i = 0; i < inputs.length; i++) {
+    val = document.getElementById( inputs[i] ).value
+    if ( val ) {
+      args[ inputs[i]] = val
+    }
+  }
+  get_prediction( args )
+}
+-->    
+    </script>
+    <title>House price predictor</title>
+  </head>
+  <body>
+    <br />        
+    <div class="container">
+      <h1>House Price Predictor</h1>
+      <hr>
+
+      <div id="result_block">
+        <p>
+          <b>Result:</b>&nbsp;<u><span id="result"></span></u>
+        </p>
+        <hr>
+      </div>
+      
+      <form>
+        <button type="button" onclick="subm();" class="btn btn-primary btn-sm float-right">Submit</button>
+
+        <div class="form-group">
+          <label class="col-form-label col-form-label-sm" for="model">model</label>
+          <select class="form-control form-control-sm col-4" id="model">
+            {% for model in models -%}
+            <option>{{ model }}</option>
+            {% endfor %}
+          </select>
+        </div>
+                
+        {% for option, val in options.items() -%}
+        <div class="form-group">
+          <label class="col-form-label col-form-label-sm" for="{{ option }}">{{ val[0] }}</label>
+          <input type="text" class="form-control form-control-sm col-8" id="{{ option }}" placeholder="{{ val[1] }}">
+        </div>
+        {% endfor %}
+        
+        <button type="button" onclick="subm();" class="btn btn-primary btn-sm float-right">Submit</button>
+      </form>
+      
+    </div>
+  </body>
+</html>
