@@ -11,32 +11,35 @@ To re-create the environment:
 - Start a jupyter notebook (```jupyter notebook```) 
 
 
+# Simple git workflow
+
+Initial checkout from server to local host
+
+```
+  git clone <url>
+```
+
+Pull changes from server to local host
+```
+  git pull
+```
+
+Commit changes *locally*
+```
+  git commit -a -m "Commit message"
+```
+
+Push committed changes to origin server
+```
+  git push
+```
 
 ## Docker
 
-Running the code locally:
-
+If you have docker installed, you can test the code locally with:
 ```
-docker build . -t champ
-docker run -p 8080:8080  --volume="$PWD:/app" champ
-docker tag champ docker-registry-default.apps.redpill-linpro.com/champagne-coding/champ
-docker login -u default -p $(oc whoami -t) docker-registry-default.apps.redpill-linpro.com
+docker build . -t champagne-coding
+docker run -p 8080:8080  --volume="$PWD:/app" -it champagne-coding
 ```
 
-
-triggers:
-    - type: ConfigChange
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-          - gitlab-runner
-        from:
-          kind: ImageStreamTag
-          name: 'gitlab-runner:alpine'
-          namespace: gitlab
-        lastTriggeredImage: >-
-          docker.io/gitlab/gitlab-runner@sha256:9b96b923979e3060604b0ff97ab1a70a22769208a168ff50b0f77c7275969f54
-      type: ImageChange
-
-
-oc tag docker.io/gitlab/gitlab-runner:alpine gitlab-runner:alpine --scheduled
+The application is then available on http://0.0.0.0:8080/ in your web browser
