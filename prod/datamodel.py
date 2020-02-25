@@ -8,7 +8,6 @@ from voluptuous import Schema, Required, Any, Coerce, Invalid, MultipleInvalid
 # Helper class definition of datamodel
 #
 
-
 class datamodel():
     def __init__( self ):
         self.metadata = {

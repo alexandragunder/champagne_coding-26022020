@@ -9,7 +9,8 @@
     <script>
 <!--
 function get_prediction( data ) {
-  $.ajax({ url: "/predict",
+  chosen_model = document.getElementById( 'model' ).value,
+  $.ajax({ url: "/predict/" + chosen_model,
            type: "POST",
            data: data,
            success: function( result ) { console.log( result ); update_prediction( result )},
@@ -52,6 +53,15 @@ function subm() {
       <form>
         <button type="button" onclick="subm();" class="btn btn-primary btn-sm float-right">Submit</button>
 
+        <div class="form-group">
+          <label class="col-form-label col-form-label-sm" for="model">model</label>
+          <select class="form-control form-control-sm col-4" id="model">
+            {% for model in models -%}
+            <option>{{ model }}</option>
+            {% endfor %}
+          </select>
+        </div>
+                
         {% for option, val in options.items() -%}
         <div class="form-group">
           <label class="col-form-label col-form-label-sm" for="{{ option }}">{{ val[0] }}</label>
