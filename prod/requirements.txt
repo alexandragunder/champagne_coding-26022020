@@ -3,4 +3,4 @@ voluptuous
 joblib
 scikit-learn==0.22.1
 sklearn
-pandas==1.0.0
+pandas==1.0.1
