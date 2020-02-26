@@ -3,10 +3,11 @@ Champagne Coding with Redpill Linpro on February 26, 2020
 
 ## Set-up
 1. Go through the steps in the file, ```CheatSheet_ChampagneCoding.pdf```
-2. Once Anaconda is installed, you should set up a new conda environment in the _terminal (macOS, Linux) or the anaconda prompt terminal (Windows)_:
+2. Once Anaconda is installed, you should set up a new conda environment in the __terminal (macOS, Linux) or the anaconda prompt terminal (Windows)__:
 - __Option 1__: ```conda env create --name champagne_coding -f environment.yml``` 
 - __Option 2__: If that doesn't work, try ```conda create --name champagne_coding --file explicit_env.txt```
 - __NOTE:__ if this doesn't work and you're using Windows, you may have to install the Python packages as you go through the code
+- __More information on using conda [here](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html)__:
 3. Activate the environment: 
 - __Linux__, __mac OS__: ```source activate champagne_coding```
 - __Windows__ : ```activate champagne_coding```
