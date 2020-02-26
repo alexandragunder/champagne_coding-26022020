@@ -2,16 +2,14 @@
 Champagne Coding with Redpill Linpro on February 26, 2020
 
 ## Set-up
-
-To re-create the environment:
-- Make sure ```conda``` is installed
-- Option 1: ```conda env create --name champagne_coding -f environment.yml``` 
-- Option 2: If that doesn't work, try ```conda create --name champagne_coding --file explicit_env.txt```
-
-__NOTE:__ if this doesn't work and you're using Windows, you may have to install the Python packages as you go through the code
-
-- ```conda activate champagne_coding```
-- Start a jupyter notebook (```jupyter notebook```) 
+1. Go through the steps in the file, ```CheatSheet_ChampagneCoding.pdf```
+2. Once Anaconda is installed, you should set up a new conda environment:
+- __Option 1__: ```conda env create --name champagne_coding -f environment.yml``` 
+- __Option 2__: If that doesn't work, try ```conda create --name champagne_coding --file explicit_env.txt```
+- __NOTE:__ if this doesn't work and you're using Windows, you may have to install the Python packages as you go through the code
+3. Activate the environment: ```conda activate champagne_coding```
+4. Start a jupyter notebook: ```jupyter notebook```
+5. Run through the Python notebook, ```housesales.ipynb```
 
 
 # Simple git workflow
